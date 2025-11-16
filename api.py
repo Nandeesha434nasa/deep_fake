@@ -1,15 +1,13 @@
-"""
-Neural Sentinel - DEMO MODE for Presentation
-"""
+# api.py
 import os
+import io
 import uvicorn
+import numpy as np
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from werkzeug.utils import secure_filename
-import random
-
-UPLOAD_FOLDER = 'temp_uploads'
+from fastapi.responses import FileResponse, JSONResponse
+from tensorflow.keras.models import load_model
+from PIL import Image
 
 app = FastAPI(title="Neural Sentinel", version="1.0")
 
@@ -21,42 +19,52 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# === Load model ===
+MODEL_PATH = "efficientnet_b4_COMPATIBLE.keras"
+MODEL_INPUT_SIZE = (380, 380)
+
+model = load_model(MODEL_PATH)
+
 
 @app.get("/health")
 def health():
-    return {
-        "status": "online",
-        "demo_mode": True,
-        "model_loaded": True
-    }
+    return {"status": "online", "model_loaded": True}
 
+
+# ================================
+# CLEAN + CORRECT DETECT ENDPOINT
+# ================================
 @app.post("/detect")
 async def detect(file: UploadFile = File(...)):
-    # Save file
-    filename = secure_filename(file.filename)
-    temp_path = os.path.join(UPLOAD_FOLDER, filename)
-    
-    with open(temp_path, "wb") as buffer:
-        buffer.write(await file.read())
-    
-    # Clean up
-    if os.path.exists(temp_path):
-        os.remove(temp_path)
-    
-    # Demo result
-    is_fake = random.random() > 0.5
-    conf = random.uniform(0.88, 0.96)
-    
+
+    # Read file bytes
+    contents = await file.read()
+
+    # Load image
+    img = Image.open(io.BytesIO(contents)).convert("RGB")
+
+    # Resize to model input
+    img = img.resize(MODEL_INPUT_SIZE, Image.BILINEAR)
+
+    # Convert to float32 (DO NOT divide by 255)
+    arr = np.asarray(img).astype(np.float32)
+
+    # Make batch
+    batch = np.expand_dims(arr, axis=0)
+
+    # Predict (shape = (1,1))
+    pred = float(model.predict(batch)[0][0])
+
+    # Interpret output
+    label = "FAKE" if pred >= 0.5 else "REAL"
+
+    # Response
     return {
         "success": True,
-        "label": "FAKE" if is_fake else "REAL",
-        "confidence": conf,
-        "probability_fake": conf if is_fake else 1-conf,
-        "probability_real": 1-conf if is_fake else conf,
-        "model_name": "EfficientNetB4 (95% Accuracy)"
+        "label": label,
+        "probability_fake": pred,
+        "probability_real": 1 - pred
     }
-
 @app.get("/")
 def root():
     return FileResponse("index.html")
@@ -68,8 +76,3 @@ def styles():
 @app.get("/script.js")
 def script():
     return FileResponse("script.js")
-
-if __name__ == "__main__":
-    print("\n🛡️  NEURAL SENTINEL - DEMO MODE")
-    print("Website fully functional with simulated results\n")
-    uvicorn.run("api_demo:app", host="127.0.0.1", port=8000, reload=True)
