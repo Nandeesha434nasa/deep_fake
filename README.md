@@ -45,3 +45,9 @@ Model trained on deepfake datasets
 Preprocessing follows exact model input size 380 × 380
 
 No manual normalization required (handled inside model)
+
+## 🛠️ How to Run Locally
+
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
