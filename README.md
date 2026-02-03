@@ -59,7 +59,7 @@ The system was benchmarked against other common architectures during the researc
 Model Architecture	Accuracy	Precision	Recall
 EfficientNet-B4	    92.5%	    91.8%	    93.2%
 Xception	        91.2%	    90.5%	    92.0%
-Custom CNN          85.8%       84.2%     87.5%
+Custom CNN          85.8%       84.2%       87.5%
 
 
 Contributors
