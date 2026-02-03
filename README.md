@@ -52,6 +52,7 @@ uvicorn api:app --reload
 4. Access the Interface
 Open your browser and navigate to: http://127.0.0.1:8000
 
+
 Model Performance
 The system was benchmarked against other common architectures during the research phase:
 
@@ -60,7 +61,8 @@ EfficientNet-B4	    92.5%	    91.8%	    93.2%
 Xception	          91.2%	    90.5%	    92.0%
 Custom CNN          85.8%     84.2%     87.5%
 
-👥 Contributors
+
+Contributors
 Academic Research Team (2025-26):
 
 Nandeesha B (1MV23IC035) - Project Coordination & Full Stack Development
