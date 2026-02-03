@@ -30,3 +30,43 @@ deep_fake/
 ├── styles.css              # Styling & Animations
 ├── script.js               # Client-side Logic (API communication)
 └── README.md               # Project Documentation
+
+## Installation & Setup
+
+### Prerequisites
+* Python 3.8 or higher
+* pip (Python Package Manager)
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/nandeesha434nasa/deep_fake.git](https://github.com/nandeesha434nasa/deep_fake.git)
+cd deep_fake
+
+2. Install Dependencies
+pip install -r requirements.txt
+
+3.Run the Application
+Start the FastAPI server using Uvicorn:
+uvicorn api:app --reload
+
+4. Access the Interface
+Open your browser and navigate to: http://127.0.0.1:8000
+
+Model Performance
+The system was benchmarked against other common architectures during the research phase:
+
+Model Architecture	Accuracy	Precision	Recall
+EfficientNet-B4	    92.5%	    91.8%	    93.2%
+Xception	          91.2%	    90.5%	    92.0%
+Custom CNN          85.8%     84.2%     87.5%
+
+👥 Contributors
+Academic Research Team (2025-26):
+
+Nandeesha B (1MV23IC035) - Project Coordination & Full Stack Development
+
+Nischay Upadhya P (1MV23IC039) - Model Implementation
+
+Supreeth Gutti (1MV23IC058) - API Development
+
+Kaushik Raju S (1MV23IC046) - Data Analysis
