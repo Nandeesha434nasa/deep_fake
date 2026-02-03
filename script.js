@@ -2,7 +2,7 @@
 // NEURAL SENTINEL - DEEPFAKE DETECTION SYSTEM
 // ============================================
 
-const API_URL = 'http://127.0.0.1:8000/detect';
+const API_URL = '/detect';
 let selectedFile = null;
 
 // ============================================
