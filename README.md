@@ -1,4 +1,4 @@
-# Academic Project: Deepfake Detection System
+# Deepfake Detection System
 
 A robust, full-stack web application designed to detect AI-manipulated media (deepfakes) using advanced computer vision and deep learning techniques. This system leverages a custom-trained **EfficientNet-B4** model to analyze images and video frames for forensic inconsistencies.
 
