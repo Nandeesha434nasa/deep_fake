@@ -21,7 +21,7 @@ A robust, full-stack web application designed to detect AI-manipulated media (de
 
 ## 📂 Project Structure
 
-```bash
+bash
 deep_fake/
 ├── api.py                  # Main FastAPI application (Inference Logic & Video Sampling)
 ├── efficientnet_b4...keras # Pre-trained Deep Learning Model
